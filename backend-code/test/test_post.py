@@ -12,3 +12,4 @@ class TestPost(unittest.TestCase):
     post = Post(expected_owner_id, expected_message)
     self.assertEqual(post.content, expected_message)
     self.assertEqual(post.owner_id, expected_owner_id)
+    self.assertIsNotNone(post.post_id)
