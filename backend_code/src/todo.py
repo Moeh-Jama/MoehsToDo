@@ -33,9 +33,15 @@ class Todo():
   def remove_user(self, owner_id):
     user_list = self.user_conn.get_data()
 
-    res = list(filter(lambda user: user['owner_id'] != owner_id, user_list))
+    users = list(filter(lambda user: user['owner_id'] != owner_id, user_list))
 
-    self.user_conn.write(res)
+    self.user_conn.write(users)
+
+    # We have to remove user posts too.
+    post_list = self.post_conn.get_data()
+    posts = list(filter(lambda post: post['owner_id'] != owner_id, post_list))
+
+    self.post_conn.write(posts)
 
   """
     Post Operations

@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from .backend_code.src.todo import Todo
 
 app = Flask(__name__)
@@ -20,15 +20,14 @@ def create_user(firstname):
   return owner_id
 
 @app.route('/delete_user/<owner_id>', methods=['POST'])
-def create_user(owner_id):
+def delete_user(owner_id):
   todo = Todo()
   todo.remove_user(owner_id)
 
-@app.route('/post/<owner_id>', methods=['POST'])
-def post_todo(owner_id):
-  pass
-
-@app.route('/post/<post_id>', methods=['GET'])
-def get_post(post_id):
-  todo = Todo()
-  return jsonify(todo.get_post(post_id)) 
+@app.route('/post/', methods=['GET'])
+def post():
+  if request.args.get('owner_id'):
+    todo = Todo()
+    return jsonify(todo.get_post(post_id))
+  else:
+    return 'create todo post!'
