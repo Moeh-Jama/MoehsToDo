@@ -1,6 +1,6 @@
 from .user import User
 from .post import Post
-from db.connector import Connector
+from ..db.connector import Connector
 
 class Todo():
   def __init__(self, dev=False):
@@ -74,3 +74,8 @@ class Todo():
 
     posts = list(filter( lambda post: post['post_id'] != post_id, post_list ))
     self.post_conn.write(posts)
+  
+  def get_post(self, post_id):
+    post_list = self.post_conn.get_data()
+    post = list(filter( lambda post: post['post_id'] == post_id, post_list ))
+    return post

@@ -9,13 +9,13 @@ class Connector():
       self.load()
   
   def load(self):
-    with open(f'db/{self.document_type}.json', 'r') as f:
+    with open(f'./backend_code/db/{self.document_type}.json', 'r') as f:
       self.data = json.load(f)
     f.close()
   
   def write(self, data):
     self.data = data
-    with open(f'db/{self.document_type}.json', 'w') as f:
+    with open(f'./backend_code/db/{self.document_type}.json', 'w') as f:
       json.dump(self.data, f)
   
   """
