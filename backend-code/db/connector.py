@@ -1,8 +1,10 @@
 import json
 
 class Connector():
-  def __init__(self, document_type):
+  def __init__(self, document_type, dev=False):
       self.document_type = document_type
+      if dev:
+        self.document_type = f"dev-{self.document_type}"
       self.data = []
       self.load()
   
@@ -11,7 +13,8 @@ class Connector():
       self.data = json.load(f)
     f.close()
   
-  def write(self):
+  def write(self, data):
+    self.data = data
     with open(f'db/{self.document_type}.json', 'w') as f:
       json.dump(self.data, f)
   
