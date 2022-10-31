@@ -15,9 +15,12 @@ def owner_posts(owner_id):
 
 @app.route('/create_user/<firstname>', methods=['POST'])
 def create_user(firstname):
+  print('requestedjson', request.get_json())
   todo = Todo()
   owner_id = todo.create_new_user(firstname)
-  return owner_id
+  response = jsonify({ 'owner_id': owner_id })
+  response.headers.add('Access-Control-Allow-Origin', '*')
+  return response
 
 @app.route('/delete_user/<owner_id>', methods=['POST'])
 def delete_user(owner_id):
