@@ -17,11 +17,9 @@ export const SignUpForm = () => {
     console.log('running axios');
     axios.post(`http://127.0.0.1:5000/create_user/${firstname}`)
       .then(res => {
-        console.log('res  is', res.data);
-        const persons = res.data.owner_id;
-        setOwnerId(persons);
+        const ownerIdResult = res.data.owner_id;
+        setOwnerId(ownerIdResult);
       });
-    console.log('ran axios');
   }
   // ask to signup first time
   // else ask to login (small login button)
