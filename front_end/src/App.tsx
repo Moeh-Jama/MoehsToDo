@@ -23,9 +23,11 @@ export const App = () => {
       });
     console.log('owner_id', owner_id);
   }
+
   useEffect(() => {
     owner_id == "" ? getCurrentuser(): null;
   }, [owner_id]);
+
   return <div>
     <NavBarMenu ownerId={owner_id}/>
     <BrowserRouter>
