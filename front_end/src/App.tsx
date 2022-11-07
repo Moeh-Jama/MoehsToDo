@@ -21,7 +21,6 @@ export const App = () => {
           setOwnerId("be7b5a832d6843859383c78a53d91347");
         }
       });
-    console.log('owner_id', owner_id);
   }
 
   useEffect(() => {
@@ -33,7 +32,7 @@ export const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path="signup" element={<SignUpForm />} />
+          <Route path="signup" element={<SignUpForm  setOwnerFunc={setOwnerId} />} />
           {owner_id == "" ? <></> : <Route path="posts" element={<UserPosts ownerId={owner_id} />} /> }
         </Route>
       </Routes>

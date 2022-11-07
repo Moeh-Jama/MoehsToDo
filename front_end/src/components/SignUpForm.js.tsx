@@ -7,10 +7,15 @@ import {
   Alert,
 } from '@mui/material';
 // import ContentPasteIcon from '@mui/icons-material/ContentPaste';
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import axios from 'axios';
 
-export const SignUpForm = () => {
+interface IProps {
+  setOwnerFunc: Dispatch<SetStateAction<string>>;
+}
+
+export const SignUpForm = (props: IProps
+  ) => {
   const [firstname, setFirstname] = useState("");
   const [owner_id, setOwnerId] = useState("");
   const submitUserAccount = () => {
@@ -19,6 +24,7 @@ export const SignUpForm = () => {
       .then(res => {
         const ownerIdResult = res.data.owner_id;
         setOwnerId(ownerIdResult);
+        props.setOwnerFunc(ownerIdResult)
       });
   }
   // ask to signup first time
