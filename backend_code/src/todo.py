@@ -58,7 +58,6 @@ class Todo():
 
   def get_all_owner_posts(self, owner_id):
     post_list = self.post_conn.get_data()
-
     owner_posts = list(filter( lambda post: post['owner_id'] == owner_id, post_list ))
 
     return owner_posts

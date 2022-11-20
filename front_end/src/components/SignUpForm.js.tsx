@@ -19,7 +19,6 @@ export const SignUpForm = (props: IProps
   const [firstname, setFirstname] = useState("");
   const [owner_id, setOwnerId] = useState("");
   const submitUserAccount = () => {
-    console.log('running axios');
     axios.post(`http://127.0.0.1:5000/create_user/${firstname}`)
       .then(res => {
         const ownerIdResult = res.data.owner_id;

@@ -6,9 +6,10 @@ import { Layout } from './components/Layout.js';
 import { NavBarMenu } from './components/Navbar.js';
 import axios from 'axios';
 import { useEffect } from 'react';
+import { CreatePost } from './components/CreatePost.js';
 
 export const App = () => {
-  const [owner_id, setOwnerId] = React.useState("");
+  const [owner_id, setOwnerId] = React.useState("c5079ba8dcdf44e19e239545ed2a739e");
 
   const getCurrentuser = async() => {
     console.log('running axios');
@@ -28,6 +29,7 @@ export const App = () => {
   }, [owner_id]);
 
   return <div>
+    <CreatePost ownerId={owner_id}></CreatePost>
     <NavBarMenu ownerId={owner_id}/>
     <BrowserRouter>
       <Routes>

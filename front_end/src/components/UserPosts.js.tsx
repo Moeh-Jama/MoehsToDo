@@ -23,7 +23,12 @@ export const UserPosts = (props:ownerProfile) => {
         const posts = res.data;
         setPostList(posts.posts);
       });
-  }
+  };
+
+  // const getUserPostContentList = () => {
+  //   const newPostList = [];
+  //   posts.map()
+  // }
 
   useEffect(() => {
     postList.length == 0 ? getUserPosts(): null;

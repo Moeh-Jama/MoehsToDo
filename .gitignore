@@ -2,5 +2,5 @@
 __pycache__/
 *.pyc
 
-backend_code/db/*.json
+./backend_code/db/*.json
 jemMac/*

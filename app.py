@@ -1,5 +1,5 @@
 from datetime import timedelta
-from flask import Flask, jsonify, request, session
+from flask import Flask, jsonify, request, session, make_response
 from .backend_code.src.todo import Todo
 # from flask.ext.session import Session
 
@@ -25,7 +25,9 @@ def current_user():
 @app.route('/owner/<owner_id>', methods=['GET'])
 def owner_posts(owner_id):
   todo = Todo()
-  return jsonify(todo.get_all_owner_posts(owner_id))
+  posts = todo.get_all_owner_posts(owner_id)
+  print('first posts', posts[0])
+  return jsonify(posts)
 
 @app.route('/create_user/<firstname>', methods=['POST'])
 def create_user(firstname):
@@ -48,11 +50,29 @@ def delete_user(owner_id):
 @app.route('/post/<owner_id>', methods=['GET'])
 def post(owner_id):
   todo = Todo()
-  response = jsonify({"posts": todo.get_all_owner_posts(owner_id)})
+  posts = todo.get_all_owner_posts(owner_id)
+  print('first posts', posts[0])
+  response = jsonify({"posts": posts})
   response.headers.add('Access-Control-Allow-Origin', '*')
   return response
-  # if request.args.get('owner_id'):
-  #   todo = Todo()
-  #   return jsonify(todo.get_post(post_id))
-  # else:
-  #   return 'create todo post!'
+
+@app.route('/postee/<owner_id>', methods=['POST', 'OPTIONS'])
+def new_post(owner_id):
+  if request.method == "OPTIONS": # CORS preflight
+    return _build_cors_preflight_response()
+  todo = Todo()
+  # check user id is non-null
+  data = request.json
+  post_message = data['postMessage']
+  print('post_message is', post_message)
+  todo.add_new_post(owner_id, post_message)
+  response = jsonify({})
+  response.headers.add('Access-Control-Allow-Origin', '*')
+  return response
+
+def _build_cors_preflight_response():
+    response = make_response()
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add('Access-Control-Allow-Headers', "*")
+    response.headers.add('Access-Control-Allow-Methods', "*")
+    return response
