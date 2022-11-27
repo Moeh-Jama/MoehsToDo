@@ -15,6 +15,13 @@ class TestPost(unittest.TestCase):
     self.assertEqual(app.user_conn.get_data()[0]['owner_id'], owner_id)
     self.assertEqual(app.user_conn.get_data()[0]['firstname'], expected_firstname)
   
+  def test_create_new_user_with_profile(self):
+    app = Todo(dev=True)
+    expected_firstname = 'mo'
+    expected_profile_image = 'www.images.png'
+    owner_id = app.create_new_user(expected_firstname, expected_profile_image)
+
+  
   def test_edit_user_firstname(self):
     app = Todo(dev=True)
     expected_firstname = 'mo'

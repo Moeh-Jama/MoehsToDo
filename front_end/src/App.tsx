@@ -9,19 +9,27 @@ import { useEffect } from 'react';
 import { CreatePost } from './components/CreatePost.js';
 
 export const App = () => {
-  const [owner_id, setOwnerId] = React.useState("c5079ba8dcdf44e19e239545ed2a739e");
+  const [owner_id, setOwnerId] = React.useState("");
+  const [user, setUser] = React.useState({});
 
   const getCurrentuser = async() => {
     console.log('running axios');
-    await axios.get(`http://127.0.0.1:5000/current_user/`)
+    // await axios.get(`http://127.0.0.1:5000/current_user/`)
+    //   .then(res => {
+    //     if (res.data['error'] !== undefined) {
+    //       const ownerIdResult = res.data.owner_id;
+    //       setOwnerId(ownerIdResult);
+    //     } else {
+    //       setOwnerId("be7b5a832d6843859383c78a53d91347");
+    //     }
+    //   });
+
+    axios.get(`http://127.0.0.1:5000/user/${owner_id}`)
       .then(res => {
-        if (res.data['error'] !== undefined) {
-          const ownerIdResult = res.data.owner_id;
-          setOwnerId(ownerIdResult);
-        } else {
-          setOwnerId("be7b5a832d6843859383c78a53d91347");
-        }
+        const user = res.data;
+        setUser(user.user);
       });
+    
   }
 
   useEffect(() => {
@@ -30,7 +38,7 @@ export const App = () => {
 
   return <div>
     <CreatePost ownerId={owner_id}></CreatePost>
-    <NavBarMenu ownerId={owner_id}/>
+    <NavBarMenu user={user}/>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>

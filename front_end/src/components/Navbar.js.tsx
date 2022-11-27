@@ -12,7 +12,13 @@ import { AccountCircle } from '@mui/icons-material';
 import { ownerProfile } from "./UserPosts.js";
 import { ClickableCopyToClipboard } from "./utils/misc.js";
 
-export const NavBarMenu = (ownerId: ownerProfile) => {
+
+// export interface User {
+//   owner_id: string;
+//   profile_image: profile_image;
+// };
+
+export const NavBarMenu = (user: any) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const compactAccountMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -51,7 +57,7 @@ export const NavBarMenu = (ownerId: ownerProfile) => {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem onClick={handleClose}>Owner ID: {ownerId.ownerId} <ClickableCopyToClipboard {...ownerId}/></MenuItem>
+          <MenuItem onClick={handleClose}>Owner ID: {user.ownerId} <ClickableCopyToClipboard {...user}/></MenuItem>
           <MenuItem onClick={handleClose}>Total ToDos: 100000</MenuItem>
         </Menu>
       </div>)
@@ -65,7 +71,7 @@ export const NavBarMenu = (ownerId: ownerProfile) => {
               <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
                 Moehs ToDo App 🚀
               </Typography>
-                {accountDetailsSection(ownerId.ownerId != "")}
+                {accountDetailsSection(user.s.ownerId != "")}
             </Toolbar>
           </AppBar>)
 }

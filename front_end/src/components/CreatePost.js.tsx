@@ -20,17 +20,11 @@ export const CreatePost = (props: PostProps) => {
     axios({
       method: "POST",
       headers: {
-        // 'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': true,
       },
       url: `http://127.0.0.1:5000/postee/${props.ownerId}`,
       data: post
     }).then((res) => console.log(res.data));
-
-    // axios.post(`http://127.0.0.1:5000/post/${props.ownerId}`, )
-    // axios.post(`http://127.0.0.1:5000/post/${props.ownerId}`).then(function (response) {
-    //   console.log(response);
-    // });
     console.log('content', post);
   };
 

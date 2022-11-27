@@ -16,9 +16,17 @@ def current_user():
   response = {}
   print(session)
   if 'owner_id' in session:
-    response = jsonify({ 'owner_id': session['owner_id'] });
+    response = jsonify({ 'owner_id': session['owner_id'] })
   else:
     response =  jsonify({'error': 'No user is connected, login!'})
+  response.headers.add('Access-Control-Allow-Origin', '*')
+  return response
+
+@app.route('/user/<owner_id>', methods=['GET'])
+def user_details(owner_id):
+  todo = Todo()
+  user = todo.get_user_details(owner_id)
+  response = jsonify({ 'user': user })
   response.headers.add('Access-Control-Allow-Origin', '*')
   return response
 
@@ -29,16 +37,20 @@ def owner_posts(owner_id):
   print('first posts', posts[0])
   return jsonify(posts)
 
-@app.route('/create_user/<firstname>', methods=['POST'])
+@app.route('/create_user/<firstname>', methods=['POST', 'OPTIONS'])
 def create_user(firstname):
-  # print('requestedjson', request.get_json())
+  if request.method == "OPTIONS": # CORS preflight
+    return _build_cors_preflight_response()
+
+  data = request.json
+  profile_image = data['profileImage']
   todo = Todo()
-  owner_id = todo.create_new_user(firstname)
+  owner_id = todo.create_new_user(firstname, profile_image=profile_image)
   if owner_id:
     session['owner_id'] = owner_id
     session.permanent = True
   print(session)
-  response = jsonify({ 'owner_id': owner_id })
+  response = jsonify({ 'owner_id': owner_id, 'profile_image': profile_image })
   response.headers.add('Access-Control-Allow-Origin', '*')
   return response
 

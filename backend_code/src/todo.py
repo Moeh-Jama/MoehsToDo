@@ -10,13 +10,19 @@ class Todo():
   """
     User Operations
   """
-  def create_new_user(self, firstname):
+  def create_new_user(self, firstname, profile_image=None):
     user_list = self.user_conn.get_data()
-    user = User(firstname)
+    user = User(firstname, profile_image=profile_image)
     user_list.append(user.__dict__)
     self.user_conn.write(user_list)
 
     return user.owner_id
+  def get_user_details(self, owner_id):
+    user_list = self.user_conn.get_data()
+    users = list(filter(lambda user: user['owner_id'] == owner_id, user_list))
+    if len(users) < 1:
+      raise Exception("No user with the owner id", owner_id, "exists")
+    return users[0]
 
   def get_user_count(self):
     user_list = self.user_conn.get_data()
